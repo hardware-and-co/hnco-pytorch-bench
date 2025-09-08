@@ -8,19 +8,28 @@ else
     NB_THREADS=$1
 fi
 
-MODELS=("BERT_pytorch" "resnet50" "mobilenet_v3_large" "yolov3" "llama")
+# usage: ./bench.sh <nb_thread> (train|eval) <model_name>
+
+case "$2" in
+  train)
+    step="training"
+    ;;
+  eval)
+    step="inference"
+    ;;
+  *)
+    echo "Error: Invalid mode '$2'. Expected 'train' or 'eval'."
+    exit 1
+    ;;
+esac
 
 cd $DIR
 
 source venv-cpu/bin/activate
 
-for model in ${MODELS[@]}; do
-    batch="--bs 32"
-    python3 benchmark/run.py ${model} -d cpu -t train ${batch} > /tmp/pytorch.log
-    cat /tmp/pytorch.log | sed "s/^/$model [training]: /g" 1>&2
-    python3 benchmark/run.py ${model} -d cpu -t eval ${batch} > /tmp/pytorch.log
-    cat /tmp/pytorch.log | sed "s/^/$model [inference]: /g" 1>&2
-done
+batch="--bs 32"
+python3 benchmark/run.py ${3} -d cpu -t ${2} ${batch} > /tmp/pytorch.log
+cat /tmp/pytorch.log | sed "s/^/${3} [$step]: /g" 1>&2
 
 cd -
 deactivate
