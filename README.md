@@ -1,7 +1,7 @@
 Hardware & Co - Benchmark PyTorch
 =================================
 
-Benchmark de compilation utilisé pour les tests CPU du [Hardware & Co](https://hardware.co/). Lance diverses inférences / entrainements de réseaux en se basant sur les [benchmarks PyTorch](https://github.com/pytorch/benchmark).
+Benchmark de Machine Learning utilisé pour les tests CPU du [Hardware & Co](https://hardware.co/). Lance diverses inférences / entrainements de réseaux en se basant sur les [benchmarks PyTorch](https://github.com/pytorch/benchmark).
 
 ## Utilisation
 # Installation
